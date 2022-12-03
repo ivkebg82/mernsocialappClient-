@@ -1,0 +1,20 @@
+.rightSide {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.iconsBar {
+  display: flex;
+  margin-top: 1rem;
+  justify-content: space-between;
+}
+.iconsBar > img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.r_button {
+  width: 80%;
+  height: 3rem;
+  align-self: center;
+  background-color: var(--orange);
+}
