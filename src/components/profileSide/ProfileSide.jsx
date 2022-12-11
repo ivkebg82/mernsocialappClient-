@@ -3,11 +3,11 @@ import LogoSearch from "../LogoSearch/LogoSearch";
 import ProfileCard from "../ProfileCard/ProfileCard";
 import FollowersCard from "../FollowersCard/FollowersCard";
 import "./ProfileSide.css";
-function ProfileSide() {
+function ProfileSide({ userName }) {
   return (
     <div className="profileSide">
       <LogoSearch />
-      <ProfileCard />
+      <ProfileCard userName={userName} />
       <FollowersCard />
     </div>
   );

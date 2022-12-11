@@ -82,3 +82,7 @@
   width: 100%;
   gap: 1rem;
 }
+.loginForm > div > span:hover {
+  color: gray;
+  cursor: pointer;
+}

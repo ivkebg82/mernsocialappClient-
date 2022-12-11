@@ -1,8 +1,12 @@
 import React from "react";
 import "./Auth.css";
 import Logo from "../../img/logo.png";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 function Auth() {
+  const [isClicked, setIsClicked] = useState(false);
   return (
     <div className="auth">
       <div className="a-left">
@@ -12,13 +16,13 @@ function Auth() {
           <h4>Explore the ideas throughout the world</h4>
         </div>
       </div>
-      {/*  <SignUp /> */}
-      <Login />
+      {isClicked ? <SignUp /> : <Login setIsClicked={setIsClicked} />}
     </div>
   );
 }
 
-function Login() {
+//?LOGIN COMPONENT----------------------------------------
+function Login({ setIsClicked }) {
   return (
     <div className="login">
       <form className="loginForm">
@@ -41,7 +45,10 @@ function Login() {
         </div>
 
         <div>
-          <span style={{ fontSize: "13px", fontWeight: "bold" }}>
+          <span
+            style={{ fontSize: "13px", fontWeight: "bold" }}
+            onClick={() => setIsClicked(true)}
+          >
             Don't have an account? Sign Up
           </span>
           <button className="button infoButton">Login</button>
@@ -50,7 +57,33 @@ function Login() {
     </div>
   );
 }
+
+//?SIGN UP COMPONENT-------------------------------------------
+
 function SignUp() {
+  const [user, setuser] = useState({
+    firstName: "",
+    lastName: "",
+    userName: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const setCredentials = (event) => {
+    let { name, value } = event.target;
+    setuser({ ...user, [name]: value });
+  };
+
+  const setUser = async () => {
+    await axios
+      .post(
+        `http://localhost:5000/auth/register/?firstName=${user.firstName}&lastName=${user.lastName}&userName=${user.userName}&password=${user.password}&confirmPassword=${user.confirmPassword}`
+      )
+      .then((response) => {
+        const user = response.data;
+        console.log(user);
+      });
+  };
   return (
     <div className="a-right">
       <form className="infoForm authForm">
@@ -61,12 +94,14 @@ function SignUp() {
             placeholder="First Name"
             className="infoInput"
             name="firstName"
+            onChange={setCredentials}
           />
           <input
             type="text"
             placeholder="Last Name"
             className="infoInput"
             name="lastName"
+            onChange={setCredentials}
           />
         </div>
         <div>
@@ -74,23 +109,39 @@ function SignUp() {
             type="text"
             className="infoInput"
             placeholder="username"
-            name="username"
+            name="userName"
+            onChange={setCredentials}
           />
         </div>
         <div>
-          <input type="text" className="infoInput" placeholder="password" />
+          <input
+            type="text"
+            className="infoInput"
+            placeholder="password"
+            name="password"
+            onChange={setCredentials}
+          />
           <input
             type="text"
             className="infoInput"
             placeholder="confirm password"
+            name="confirmPassword"
+            onChange={setCredentials}
           />
         </div>
         <div>
           <span>Alredy have an account. Login!</span>
         </div>
-        <button className="button infoButton" type="submit">
-          SignUp
-        </button>
+
+        <Link
+          to={`/home/${user.userName}`}
+          onClick={setUser}
+          style={{ textDecoration: "none" }}
+        >
+          <button className="button infoButton" type="submit">
+            SignUp
+          </button>
+        </Link>
       </form>
     </div>
   );

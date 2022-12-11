@@ -1,8 +1,11 @@
-import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 import cover from "../../img/cover.jpg";
 import profileImg from "../../img/profileImg.jpg";
 import "./ProfileCard.css";
-export default function ProfileCard() {
+import { Link } from "react-router-dom";
+
+export default function ProfileCard({ userName }) {
   const profilePage = true;
   return (
     <div className="profileCard">
@@ -11,7 +14,7 @@ export default function ProfileCard() {
         <img src={profileImg} alt="" />
       </div>
       <div className="profileName">
-        <span>Zendaya MJ</span>
+        <span>{userName}</span>
         <span>Senior UX/UI Designer</span>
       </div>
 
@@ -40,6 +43,7 @@ export default function ProfileCard() {
         <hr />
       </div>
       {profilePage ? "" : <span>My profile</span>}
+      <Link to={`/page/${userName}`}>go</Link>
     </div>
   );
 }

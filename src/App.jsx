@@ -3,6 +3,7 @@ import Home from "./pages/home/Home";
 import Profile from "./pages/Profile/Profile";
 import Auth from "./pages/Auth/Auth";
 
+import { Routes, Route } from "react-router-dom";
 function App() {
   return (
     <div className="App">
@@ -12,15 +13,20 @@ function App() {
           top: "-18%",
           right: "0",
         }}
-      ></div>{" "}
+      ></div>
       <div
         className="blur"
         style={{
           top: "36%",
           left: "-8rem",
         }}
-      ></div>{" "}
-      {/* <Home> </Home>{" "} */} {<Profile />} {/*    <Auth /> */}{" "}
+      ></div>
+
+      <Routes>
+        <Route path="/" element={<Auth />}></Route>
+        <Route path="/home/:userName" element={<Home />}></Route>
+        <Route path="/profile/:id" element={<Profile />}></Route>
+      </Routes>
     </div>
   );
 }
