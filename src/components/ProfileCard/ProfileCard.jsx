@@ -1,11 +1,10 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import cover from "../../img/cover.jpg";
 import profileImg from "../../img/profileImg.jpg";
 import "./ProfileCard.css";
-import { Link } from "react-router-dom";
 
-export default function ProfileCard({ userName }) {
+export default function ProfileCard() {
+  const { userName } = useParams();
   const profilePage = true;
   return (
     <div className="profileCard">
@@ -43,7 +42,6 @@ export default function ProfileCard({ userName }) {
         <hr />
       </div>
       {profilePage ? "" : <span>My profile</span>}
-      <Link to={`/page/${userName}`}>go</Link>
     </div>
   );
 }

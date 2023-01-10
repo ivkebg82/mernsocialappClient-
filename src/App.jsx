@@ -2,7 +2,7 @@ import "./App.css";
 import Home from "./pages/home/Home";
 import Profile from "./pages/Profile/Profile";
 import Auth from "./pages/Auth/Auth";
-
+import RequiredAuth from "./pages/RequiredAuth/RequiredAuth";
 import { Routes, Route } from "react-router-dom";
 function App() {
   return (
@@ -24,8 +24,10 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Auth />}></Route>
-        <Route path="/home/:userName" element={<Home />}></Route>
-        <Route path="/profile/:id" element={<Profile />}></Route>
+        <Route element={<RequiredAuth />}>
+          <Route path="/home/:userName" element={<Home />}></Route>
+          <Route path="/profile/:id" element={<Profile />}></Route>
+        </Route>
       </Routes>
     </div>
   );

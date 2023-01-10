@@ -2,9 +2,9 @@ import React from "react";
 import "./Auth.css";
 import Logo from "../../img/logo.png";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useUserState } from "../../Context";
 import axios from "axios";
-
+import { Navigate, redirect } from "react-router-dom";
 function Auth() {
   const [isClicked, setIsClicked] = useState(false);
   return (
@@ -16,13 +16,13 @@ function Auth() {
           <h4>Explore the ideas throughout the world</h4>
         </div>
       </div>
-      {isClicked ? <SignUp /> : <Login setIsClicked={setIsClicked} />}
+      {isClicked ? <Login /> : <SignUp setIsClicked={setIsClicked} />}
     </div>
   );
 }
 
 //?LOGIN COMPONENT----------------------------------------
-function Login({ setIsClicked }) {
+function Login() {
   return (
     <div className="login">
       <form className="loginForm">
@@ -45,10 +45,7 @@ function Login({ setIsClicked }) {
         </div>
 
         <div>
-          <span
-            style={{ fontSize: "13px", fontWeight: "bold" }}
-            onClick={() => setIsClicked(true)}
-          >
+          <span style={{ fontSize: "13px", fontWeight: "bold" }}>
             Don't have an account? Sign Up
           </span>
           <button className="button infoButton">Login</button>
@@ -60,34 +57,36 @@ function Login({ setIsClicked }) {
 
 //?SIGN UP COMPONENT-------------------------------------------
 
-function SignUp() {
-  const [user, setuser] = useState({
-    firstName: "",
-    lastName: "",
-    userName: "",
-    password: "",
-    confirmPassword: "",
-  });
-
+function SignUp({ setIsClicked }) {
+  const { user, setUser } = useUserState();
+  console.log(user);
   const setCredentials = (event) => {
     let { name, value } = event.target;
-    setuser({ ...user, [name]: value });
+    setUser({ ...user, [name]: value });
   };
 
-  const setUser = async () => {
+  const register = async (e) => {
+    e.preventDefault();
+
     await axios
       .post(
-        `http://localhost:5000/auth/register/?firstName=${user.firstName}&lastName=${user.lastName}&userName=${user.userName}&password=${user.password}&confirmPassword=${user.confirmPassword}`
+        `http://localhost:5000/auth/register/?firstName=${user.firstName}&lastName=${user.lastName}
+    &userName=${user.userName}&password=${user.password}&confirmPassword=${user.confirmPassword}`
       )
       .then((response) => {
         const user = response.data;
         console.log(user);
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
+
   return (
     <div className="a-right">
-      <form className="infoForm authForm">
+      <form className="infoForm authForm" onSubmit={register}>
         <h3>Sign Up</h3>
+
         <div>
           <input
             type="text"
@@ -130,18 +129,11 @@ function SignUp() {
           />
         </div>
         <div>
-          <span>Alredy have an account. Login!</span>
+          <span onClick={() => setIsClicked(true)}>
+            Alredy have an account. Login!
+          </span>
         </div>
-
-        <Link
-          to={`/home/${user.userName}`}
-          onClick={setUser}
-          style={{ textDecoration: "none" }}
-        >
-          <button className="button infoButton" type="submit">
-            SignUp
-          </button>
-        </Link>
+        <button className="button infoButton">SignUp</button>
       </form>
     </div>
   );

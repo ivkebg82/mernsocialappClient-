@@ -6,6 +6,7 @@ import Comment from "../../img/comment.png";
 import TrendCard from "../TrendCard/TrendCard";
 import { useState } from "react";
 import ShareModal from "../ShareModal/ShareModal";
+import { Link } from "react-router-dom";
 function RightSide() {
   const [modalOpened, setModalOpened] = useState(false);
   return (
@@ -19,6 +20,7 @@ function RightSide() {
       <button className=" buton r_button" onClick={() => setModalOpened(true)}>
         Share
       </button>
+      <Link to={"/"}>click</Link>
       <ShareModal
         modalOpened={modalOpened}
         setModalOpened={setModalOpened}

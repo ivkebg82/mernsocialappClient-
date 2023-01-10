@@ -5,17 +5,11 @@ import PostSide from "../../components/PostSide/PostSide";
 import RightSide from "../../components/RightSide/RightSide";
 import { useEffect } from "react";
 import axios from "axios";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
 
 function Home() {
-  const [users, setUsers] = useState([]);
-  const { userName } = useParams();
-
-  const getData = async () => {
+  /*   const getData = async () => {
     await axios.get("http://localhost:5000/user/getUsers").then((response) => {
       const users = response.data;
-      setUsers(users);
     });
   };
   useEffect(() => {
@@ -23,10 +17,10 @@ function Home() {
     return () => {
       return;
     };
-  }, []);
+  }, []); */
   return (
     <div className="home">
-      <ProfileSide userName={userName}></ProfileSide>
+      <ProfileSide></ProfileSide>
       <PostSide></PostSide>
       <RightSide />
     </div>
